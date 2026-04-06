@@ -160,6 +160,22 @@ No MLP, cada pixel tem sua propria conexao. Se o modelo aprendeu a detectar uma 
 
 Na CNN, o **mesmo filtro 3x3 desliza por toda a imagem**. Se ele aprendeu a detectar uma borda, detecta em QUALQUER posicao. Isso e chamado de **compartilhamento de pesos** e torna a CNN muito mais eficiente.
 
+## Padding: mantendo o tamanho da imagem
+
+Na CNN basica, a convolucao **diminui** o tamanho (28 → 26). Mas e possivel **manter** o tamanho adicionando uma borda de zeros ao redor da imagem. Isso se chama **padding**.
+
+```
+Sem padding (CNN basica):
+  Entrada: 28x28 → Conv 3x3 → Saida: 26x26  (diminuiu!)
+  Formula: 28 - 3 + 1 = 26
+
+Com padding=1 (CNN avancada):
+  Entrada: 28x28 → Adiciona borda de 1 pixel → 30x30 → Conv 3x3 → Saida: 28x28  (manteve!)
+  Formula: (28 + 2) - 3 + 1 = 28
+```
+
+**Vantagem:** permite empilhar mais camadas sem que a imagem encolha rapido demais. A reducao de tamanho fica por conta do MaxPool, que voce controla.
+
 ## Resumo de todos os modelos
 
 | Modelo | Tipo | Acuracia | Vantagem | Limitacao |
@@ -167,14 +183,12 @@ Na CNN, o **mesmo filtro 3x3 desliza por toda a imagem**. Se ele aprendeu a dete
 | Regressao Logistica | Linear | ~92% | Simples, rapido | So fronteiras lineares |
 | LogReg + PCA | Linear | ~92-93% | Comprime dados | Ainda linear |
 | MLP | Rede Neural | ~97% | Nao-linear | Perde estrutura 2D |
-| **CNN** | **Rede Neural Conv.** | **~98-99%** | **Preserva estrutura 2D** | Mais complexo |
+| CNN basica | Rede Neural Conv. | ~98% | Preserva estrutura 2D | Poucos filtros, sem regularizacao |
+| **CNN avancada** | **Rede Neural Conv.** | **~99%+** | **BatchNorm + Dropout + Augmentation** | Treina mais devagar |
 
-## Proximos passos (alem deste projeto)
+## Proximo passo
 
-Se voce quer continuar aprendendo:
+A CNN basica ja e boa (~98%), mas com tecnicas avancadas podemos chegar a 99%+!
 
-1. **Melhorar a CNN:** adicionar Dropout (regularizacao), Batch Normalization, mais camadas
-2. **Data Augmentation:** rotacionar, deslocar, escalar imagens de treino para criar mais dados
-3. **Outros datasets:** Fashion-MNIST (roupas), CIFAR-10 (fotos reais de 10 categorias)
-4. **Transfer Learning:** usar redes pre-treinadas (ResNet, VGG) como ponto de partida
-5. **Frameworks modernos:** PyTorch Lightning, Hugging Face Transformers
+- **docs/06_tecnicas_avancadas.md** -- Data Augmentation, BatchNorm, Dropout, Scheduler
+- **03_cnn/cnn_avancada.py** -- o codigo correspondente

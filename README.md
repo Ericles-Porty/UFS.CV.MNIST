@@ -2,7 +2,7 @@
 
 Um guia pratico para aprender **visao computacional do zero**, usando o dataset MNIST (digitos escritos a mao, 0-9).
 
-O projeto implementa 4 abordagens diferentes, do mais simples ao mais avancado, para que voce entenda a evolucao dos modelos e **por que** cada tecnica existe.
+O projeto implementa 5 abordagens diferentes, do mais simples ao mais avancado, para que voce entenda a evolucao dos modelos e **por que** cada tecnica existe.
 
 ## Pre-requisitos
 
@@ -38,7 +38,8 @@ UFS.CV.MNIST/
 │   ├── 02_regressao_logistica.md       ← Classificacao linear, metricas
 │   ├── 03_pca_e_reducao.md             ← PCA, Grid Search, Cross-Validation
 │   ├── 04_redes_neurais_mlp.md         ← Neuronios, backpropagation, PyTorch
-│   └── 05_redes_convolucionais.md      ← Convolucao, filtros, pooling, CNNs
+│   ├── 05_redes_convolucionais.md      ← Convolucao, filtros, pooling, CNNs
+│   └── 06_tecnicas_avancadas.md       ← Data Augmentation, BatchNorm, Dropout, Scheduler
 │
 ├── 01_regressao_logistica/             ← Modelos classicos (scikit-learn)
 │   ├── baseline.py                     ← Regressao Logistica basica
@@ -49,7 +50,8 @@ UFS.CV.MNIST/
 │
 ├── 03_cnn/                             ← Rede convolucional (PyTorch)
 │   ├── forward_debug.py                ← Debug: ver shapes camada por camada
-│   └── treinar_e_visualizar.py         ← Treino + visualizacao de filtros
+│   ├── treinar_e_visualizar.py         ← Treino + visualizacao de filtros
+│   └── cnn_avancada.py                 ← CNN otimizada: BatchNorm, Dropout, Augmentation
 │
 └── resultados/                         ← Outputs gerados pelos scripts
     ├── erros_logreg/                   ← Imagens que LogReg errou
@@ -98,23 +100,33 @@ UFS.CV.MNIST/
 4. Abra `resultados/visualizacoes_cnn/filtros_conv1.png` -- voce consegue identificar detectores de bordas?
 5. Abra `resultados/visualizacoes_cnn/ativacoes_conv1.png` -- veja o que a rede "enxerga" em uma imagem
 
+### Etapa 5: CNN Avancada (buscando 99%+)
+
+> Combine todas as tecnicas modernas para extrair o maximo do MNIST.
+
+1. Leia: [docs/06_tecnicas_avancadas.md](docs/06_tecnicas_avancadas.md)
+2. Execute: `python 03_cnn/cnn_avancada.py` -- treinamento mais longo (~2 min), mas resultado superior
+3. Abra `resultados/visualizacoes_cnn/filtros_cnn_avancada.png` -- 32 filtros aprendidos (vs 8 da CNN basica)
+4. Abra `resultados/visualizacoes_cnn/erros_cnn_avancada.png` -- veja os poucos erros restantes (muitos sao dificeis ate para humanos!)
+
 ---
 
 ## Comparacao de Resultados
 
-| Modelo | Acuracia Esperada | Tempo (aprox.) | Preserva estrutura 2D? |
-|--------|:-----------------:|:--------------:|:----------------------:|
-| Regressao Logistica | ~92% | ~1 min | Nao |
-| LogReg + PCA + Grid Search | ~92-93% | ~3 min | Nao |
-| MLP (PyTorch) | ~97% | ~30s (GPU) | Nao |
-| **CNN (PyTorch)** | **~98-99%** | **~30s (GPU)** | **Sim** |
+| Modelo | Acuracia Esperada | Tempo (aprox.) | Tecnicas usadas |
+|--------|:-----------------:|:--------------:|:---------------:|
+| Regressao Logistica | ~92% | ~1 min | StandardScaler |
+| LogReg + PCA + Grid Search | ~92-93% | ~3 min | + PCA, Cross-Validation |
+| MLP (PyTorch) | ~97% | ~30s (GPU) | Rede neural simples |
+| CNN basica | ~98% | ~30s (GPU) | Convolucao, Pooling |
+| **CNN avancada** | **~99%+** | **~2 min (GPU)** | **+ BatchNorm, Dropout, Augmentation, Scheduler** |
 
 ## Proximos Passos
 
 Depois de completar todas as etapas, voce pode:
 
-1. **Melhorar a CNN** -- adicionar Dropout, Batch Normalization, mais camadas
-2. **Data Augmentation** -- rotacionar e deslocar imagens para criar mais dados de treino
-3. **Outros datasets** -- Fashion-MNIST (roupas) ou CIFAR-10 (fotos reais)
-4. **Transfer Learning** -- usar redes pre-treinadas (ResNet, EfficientNet) como base
-5. **Segmentacao e Deteccao** -- ir alem da classificacao (detectar objetos em imagens)
+1. **Outros datasets** -- Fashion-MNIST (roupas) ou CIFAR-10 (fotos reais coloridas)
+2. **Transfer Learning** -- usar redes pre-treinadas (ResNet, EfficientNet) como base
+3. **Segmentacao e Deteccao** -- ir alem da classificacao (detectar objetos em imagens)
+4. **Frameworks modernos** -- PyTorch Lightning (simplifica o loop de treino)
+5. **Competicoes** -- Kaggle tem desafios de visao computacional para praticar
