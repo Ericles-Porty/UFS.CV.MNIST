@@ -1,0 +1,17 @@
+# Dataset MNIST (carregado via Hugging Face)
+datasets
+
+# Framework de Deep Learning (redes neurais, GPU)
+torch
+
+# Computacao numerica (arrays, matrizes)
+numpy
+
+# Visualizacao (graficos, imagens)
+matplotlib
+
+# Machine Learning classico (Regressao Logistica, PCA, Grid Search)
+scikit-learn
+
+# Processamento de imagens
+Pillow
