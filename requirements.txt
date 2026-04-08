@@ -1,8 +1,10 @@
 # Dataset MNIST (carregado via Hugging Face)
 datasets
 
-# Framework de Deep Learning (redes neurais, GPU)
+# Framework de Deep Learning (redes neurais, GPU com CUDA)
+--extra-index-url https://download.pytorch.org/whl/cu128
 torch
+torchvision
 
 # Computacao numerica (arrays, matrizes)
 numpy
